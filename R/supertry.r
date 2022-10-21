@@ -11,3 +11,7 @@ library(tidyverse)
 func_supertry = function(){
     message("hello")
 }
+
+runInitJS <- function(){
+    runjs('document.getElementById("sel.panel.mode").parentElement.style.display="none"')
+}
