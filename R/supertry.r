@@ -12,7 +12,7 @@ source("server_components.r", chdir=T)
 source("ui_components.r", chdir=T)
 
 func_supertry = function(){
-    message("hello 5")
+    message("hello 6")
 }
 
 runInitJS <- function(){
