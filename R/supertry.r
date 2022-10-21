@@ -9,11 +9,11 @@ library(DT)
 library(tidyverse)
 
 func_supertry = function(){
-    message("hello 2")
+    message("hello 3")
 }
 
 runInitJS <- function(){
-    runjs('document.getElementById("sel.panel.mode").parentElement.style.display="none"')
+    shinyjs::runjs('document.getElementById("sel.panel.mode").parentElement.style.display="none"')
 }
 
 ui <- function(seurat.object) {
