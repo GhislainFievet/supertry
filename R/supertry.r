@@ -9,7 +9,7 @@ library(DT)
 library(tidyverse)
 
 func_supertry = function(){
-    message("hello 4")
+    message("hello 5")
 }
 
 runInitJS <- function(){
@@ -422,4 +422,45 @@ server <- function(input, output, session) {
             write.csv(df, file, sep="\t", quote=F, row.names=F, col.names=F)
         }
     )                         
+}
+                          
+SeurSelect <- function(arg.seurat.object, l_selections=NULL, assay=NULL){
+    
+    if (!is.null(assay)){
+        DefaultAssay(object = arg.seurat.object) <- assay
+    }
+    seurat.object <<- arg.seurat.object
+    
+    c_meta_data <<- c()
+    for ( str_md in names(seurat.object@meta.data)){
+        if ( length(unique(seurat.object@meta.data[[str_md]])) < 100 ){
+            c_meta_data <<- c(c_meta_data, str_md)
+        }
+    }
+    
+    c_reducs <<- rev(names(seurat.object@reductions))
+    c_genes <<- unlist(rownames(seurat.object))
+
+    if (is.null(l_selections)){
+        l_init_selection <<- list(df_lists=data.frame(selection=c("rand10"),
+              description=c("Random selection of 10 cells"),
+              cell_number=c(10),
+              buts=paste0(
+                          "<button id='iddl_",c(1),"' onclick=doDLFile(this.id)><i class='fa fa-download'></i></button>",
+                         "<button id='idedit_",c(1),"' onclick=editSelection(this.id)><i class='fa fa-edit'></i></button> ",
+                         "<button id='iddel_",c(1),"' onclick=removeSelection(this.id)><i class='fa fa-trash'></i></button> ")),
+                  c_cell_selections=list(rand10=sample(colnames(seurat.object), 10)))
+    } else {
+        l_init_selection <<- l_selections
+        l_init_selection <<- list(df_lists=data.frame(selection=l_selections$names$selection,
+              description=l_selections$names$description,
+              cell_number=l_selections$names$cell_number,
+              buts=paste0(
+                          "<button id='iddl_",1:nrow(l_selections$names),"' onclick=doDLFile(this.id)><i class='fa fa-download'></i></button>",
+                         "<button id='idedit_",1:nrow(l_selections$names),"' onclick=editSelection(this.id)><i class='fa fa-edit'></i></button> ",
+                         "<button id='iddel_",1:nrow(l_selections$names),"' onclick=removeSelection(this.id)><i class='fa fa-trash'></i></button> ")),
+                  c_cell_selections=l_selections$cells)
+    }
+    
+    return(runGadget(ui(seurat.object), server))
 }
