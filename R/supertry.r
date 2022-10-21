@@ -8,6 +8,9 @@ library(shinyjs)
 library(DT)
 library(tidyverse)
 
+source("server_components.r", chdir=T)
+source("ui_components.r", chdir=T)
+
 func_supertry = function(){
     message("hello 5")
 }
