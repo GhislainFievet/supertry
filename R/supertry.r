@@ -9,7 +9,7 @@ library(DT)
 library(tidyverse)
 
 func_supertry = function(){
-    message("hello 3")
+    message("hello 4")
 }
 
 runInitJS <- function(){
