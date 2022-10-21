@@ -8,11 +8,10 @@ library(shinyjs)
 library(DT)
 library(tidyverse)
 
-source("server_components.r", chdir=T)
-source("ui_components.r", chdir=T)
+
 
 func_supertry = function(){
-    message("hello 6")
+    message("hello 7")
 }
 
 runInitJS <- function(){
@@ -428,6 +427,8 @@ server <- function(input, output, session) {
 }
                           
 SeurSelect <- function(arg.seurat.object, l_selections=NULL, assay=NULL){
+    source("server_components.r", chdir=T)
+    source("ui_components.r", chdir=T)
     
     if (!is.null(assay)){
         DefaultAssay(object = arg.seurat.object) <- assay
